@@ -7,18 +7,17 @@ const modalRef = document.querySelector('#modal-root');
 
 const Modal = ({ largeImageURL, onClose, tags }) => {
   useEffect(() => {
+    const onCloseByEscape = event => {
+      if (event.code === 'Escape') {
+        onClose();
+      }
+    };
     window.addEventListener('keydown', onCloseByEscape);
 
     return () => {
       window.removeEventListener('keydown', onCloseByEscape);
     };
-  });
-
-  const onCloseByEscape = event => {
-    if (event.code === 'Escape') {
-      onClose();
-    }
-  };
+  }, [onClose]);
 
   return createPortal(
     <Overlay onClick={onClose}>
